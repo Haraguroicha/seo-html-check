@@ -14,8 +14,13 @@ class SeoCheck {
     async openfile(file = "-") {
         if (file == "-") {
             this._html = await getStdin();
-        } else {
+        } else if (typeof(file) === "string") {
             this._html = fs.readFileSync(file);
+        } else {
+            this._html = '';
+            while (null !== (chunk = file.read())) {
+                this._html += chunk;
+            }
         }
         this._dom = cheerio.load(this._html);
         return true;
@@ -84,8 +89,10 @@ class SeoCheck {
         const writeLog = (log) => {
             if (output == "-") {
                 console.error(log);
-            } else {
+            } else if (typeof(output) === "string") {
                 logs.push(log);
+            } else {
+                output.write(log);
             }
         }
         for (const rule of this._rules) {
@@ -98,6 +105,9 @@ class SeoCheck {
         if (logs.length > 0) {
             logs.push('');
             fs.writeFileSync(output, logs.join('\n'), { flag: 'w' });
+        }
+        if (typeof(output) !== "string") {
+            output.end();
         }
     }
 }
