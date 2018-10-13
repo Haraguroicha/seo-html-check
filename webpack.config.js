@@ -11,6 +11,7 @@ module.exports = {
         // 出力ファイル名
         filename: 'seo-html-check.js'
     },
+    target: "node",
     module: {
         rules: [
             {
