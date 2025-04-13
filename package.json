@@ -42,5 +42,9 @@
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
-  "resolutions": {}
+  "resolutions": {},
+  "trustedDependencies": [
+    "core-js",
+    "fsevents"
+  ]
 }
